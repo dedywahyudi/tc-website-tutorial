@@ -1,0 +1,63 @@
+version: '2'
+services:
+  tc-cache:
+    image: "redis:3.2.5"
+    ports:
+      - "6379:6379"
+  tc-informix:
+    image: "appiriodevops/tc-database-scripts:latest"
+    hostname: env.topcoder.com
+    container_name: iif_innovator_c
+    environment: 
+      LICENSE: accept
+    ports:
+      - "2021:2021"
+      - "2022:2022"
+      - "27017:27017"
+      - "27018:27018"
+      - "27883:27883"
+    tty: true
+  tc-ldap:
+    image: "appiriodevops/ldap"
+    ports:
+      - "389:389"
+    tty: true
+  tc-base:
+    build:
+      context: base
+    image: "appiriodevops/tc-website:base-jdk7"
+  tc-httpd:
+    image: "appiriodevops/tc-website:httpd"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "${TC_WEBSITE_HOME}:/root/tc-platform"
+    tty: true
+    links:
+      - "run-tc-website:tc-website"
+    depends_on:
+      - "run-tc-website"
+  
+  build-tc-website:
+    build:
+      context: build
+    image: "appiriodevops/tc-website:build-jdk7"
+    volumes:
+      - "${TC_WEBSITE_HOME}:/root/tc-platform"
+      - "${JBOSS_DEPLOYMENT_DIR}:/root/deployment"
+
+  run-tc-website:
+    build:
+      context: run
+    image: "appiriodevops/tc-website:run-jdk7"
+    hostname: local.tc.cloud.topcoder.com
+    volumes:
+      - "${JBOSS_DEPLOYMENT_DIR}:/root/deployment"
+    ports:
+      - "8009:8009"
+    depends_on:
+      - "tc-informix"
+      - "tc-ldap"
+      - "tc-cache"
+
