@@ -20,6 +20,6 @@ cp -f /root/files/distui/jboss-web.xml /root/tc-platform/tc-website/resources/di
 
 # deploy
 cd /root/tc-platform/tc-website
-ant -f build_mm.xml deploy
-ant -f build_tc.xml clean deploy
+# ant -f build_mm.xml deploy
+ant -f /root/build_tc.xml clean deploy
 ant -f build_distui.xml clean deploy

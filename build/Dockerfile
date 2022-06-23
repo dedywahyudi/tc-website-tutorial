@@ -10,6 +10,7 @@ COPY files /root/files
 
 # copy build script
 COPY build.sh /root
+COPY build_tc.xml /root
 
 # make it executable
 RUN dos2unix /root/build.sh

@@ -1,8 +1,8 @@
 # Legacy TC Website Local Deployment
 
-Legacy TC website involve some require services i.e: Informix DB Server, LDAP, HTTP Server, Jboss Application Server, etc. So the most effordable way to setup locally is by utilizing on inside docker. We already done this on this [repo](https://github.com/appirio-tech/tc-common-tutorials/tree/master/docker/tc-website) But it won't works because it used JDK8, and Legacy have issues on JDK > 7. 
+Legacy TC website involve some require services i.e: Informix DB Servcer, LDAP, HTTP Server, Jboss Application Server, etc. So the most effordable way to setup locally is by utilizing on inside docker. We already done this on this [repo](https://github.com/appirio-tech/tc-common-tutorials/tree/master/docker/tc-website) But it won't works because it used JDK8, and Legacy have issues on JDK > 7. 
 
-On guide, we'll setup Docker (based on above [repo](https://github.com/appirio-tech/tc-common-tutorials/tree/master/docker/tc-website)) to deploy legacy TC Website on it.
+On guide, we'll setup docker (base on above repo) to deploy legacy TC Website on it.
 This setup is for `Linux, Mac and Windows`.
 
 ## Tech Stack
@@ -106,9 +106,11 @@ Checking jboss log
 Insert some test data into informix database. Also currently the database misses *user_sso_login* table, it needs be created:
 
 ```shell
-docker cp test_files/mm_test_data.sql iif_innovator_c:/tmp
+docker cp test_files/user_sso_login.sql iif_innovator_c:/tmp
+docker cp test_files/pact_test_data.sql iif_innovator_c:/tmp
 docker exec -it iif_innovator_c bash
-dbaccess informixoltp /tmp/mm_test_data.sql
+dbaccess informixoltp /tmp/pact_test_data.sql
+dbaccess common_oltp /tmp/user_sso_login.sql
 exit
 ```
 
@@ -135,46 +137,6 @@ https://local.tc.cloud.topcoder.com/PactsMemberServlet?module=PaymentHistory&ful
 https://local.tc.cloud.topcoder.com/PactsInternalServlet
 ![](images/pact-internal.png)
 
-
-Marathon Match WAR:
-
-1. Member Standing
-https://local.tc.cloud.topcoder.com/longcontest/?module=ViewStandings&rd=13673
-![](images/standing.png)
-2. Submission history
-https://local.tc.cloud.topcoder.com/longcontest/?module=ViewSubmissionHistory&cr=124834&rd=13673&compid=2020
-![](images/history.png)
-
-3. Example history
-https://local.tc.cloud.topcoder.com/longcontest/?module=ViewExampleHistory&cr=124834&rd=13673&compid=2020
-![](images/example.png)
-
-
-4. Registrants
-https://local.tc.cloud.topcoder.com/longcontest/?module=ViewRegistrants&rd=13673
-![](images/registrant.png)
-
-Query WAR:
-https://local.tc.cloud.topcoder.com/query/query
-![](images/query.png)
-
-Admin WAR:
-1. https://local.tc.cloud.topcoder.com/admin/
-![](images/admin.png)
-2. https://local.tc.cloud.topcoder.com/admin/?module=TermsList
-![](images/admin-term.png)
-
-Email WAR:
-https://local.tc.cloud.topcoder.com/email/
-![](images/email.png)
-
-Reg WAR:
-https://local.tc.cloud.topcoder.com/reg/
-![](images/reg.png)
-
-Private Label WAR:
-https://local.tc.cloud.topcoder.com/pl/
-![](images/pl.png)
 
 Note that you may receive HTTPS certificate warnings, just ignore it and proceed.
 And you can click around to try the other pages.
