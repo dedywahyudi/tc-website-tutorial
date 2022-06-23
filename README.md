@@ -133,9 +133,6 @@ PACT page
 1. Member
 https://local.tc.cloud.topcoder.com/PactsMemberServlet?module=PaymentHistory&full_list=false
 ![](images/pact-member.png)
-2. Internal
-https://local.tc.cloud.topcoder.com/PactsInternalServlet
-![](images/pact-internal.png)
 
 
 Note that you may receive HTTPS certificate warnings, just ignore it and proceed.
