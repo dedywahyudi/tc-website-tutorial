@@ -78,7 +78,7 @@ Please add this line to your `hosts` file (Linux/Mac on `/etc/hosts`)
 ```
 
 # Build Base Image
-You only need to run this comand once
+You only need to run this command once
 ```
 docker-compose build tc-base
 ```
@@ -108,8 +108,10 @@ Insert some test data into informix database. Also currently the database misses
 ```shell
 docker cp test_files/user_sso_login.sql iif_innovator_c:/tmp
 docker cp test_files/pact_test_data.sql iif_innovator_c:/tmp
+docker cp test_files/updated_pact_test_data.sql iif_innovator_c:/tmp
 docker exec -it iif_innovator_c bash
 dbaccess informixoltp /tmp/pact_test_data.sql
+dbaccess informixoltp /tmp/updated_pact_test_data.sql
 dbaccess common_oltp /tmp/user_sso_login.sql
 exit
 ```
